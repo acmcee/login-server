@@ -37,7 +37,7 @@
 
 ### 1. bash_profile 添加 alias
 * alias login-server='/xx/bin/python /xx/login-server/login.py'
-* alias server_alias="ogin-server server_alias"
+* alias server_alias="login-server server_alias"
 
 ### 2. login server 
 
