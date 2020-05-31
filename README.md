@@ -6,9 +6,9 @@
 * python 3 ， python 2 未测试
 
 
-## 配置文件 .config.json 中添加以下信息
+## 将.config-example.json 重命名为 .config.json 修改对应的配置以及添加服务器列表
 
-* 添加动态码的关键字
+* 添加数字验证码的关键字
 * 添加登录服务器后的关键字
 * 添加服务器的列表以及对应的map
 
