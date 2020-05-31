@@ -7,7 +7,10 @@ import pexpect
 import sys
 import os
 
-config_file = '.config.json'
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+config_file = os.path.join(BASE_DIR, '.config.json')
 
 
 class ServerConfig(object):
@@ -49,7 +52,7 @@ class LoginServer(object):
         if not server_dns:
             print("%s is not exists in %s" % (server_alias, config_file))
             sys.exit(-1)
-        login_cmd = self.config.login_cmd.format(cas_user=self.config.cas_user, server_alias=server_alias)
+        login_cmd = self.config.login_cmd.format(cas_user=self.config.cas_user, server_alias=server_dns)
         child = pexpect.spawn(login_cmd)
         index = child.expect([self.config.totp_keyword.encode('utf8'),
                               self.config.login_success_keyword.encode('utf8'),
