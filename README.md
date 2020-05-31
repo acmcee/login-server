@@ -21,6 +21,7 @@
   "login_success_keyword": "机房内网",  // 服务器登录成功的关键字
   "login_failed_keyword": "Permission denied'",  // 登录失败的关键字
   "login_cmd": "ssh -A {cas_user}@{server_alias}", // 服务器登录的命令
+  "login_log": "/tmp/login-server.log",  // 服务器登录的日志，方便排查问题
   "servers": {
     "server_alias": "server_dns",  // 服务器列表
     "s1": "xxx.xxx.com",
@@ -32,10 +33,12 @@
 ```
 
 
-## bash_profile 添加 alias
+## Usage:
 
-* alias server_alias="/xx/xx/login-server server_alias"
+### 1. bash_profile 添加 alias
+* alias login-server='/xx/bin/python /xx/login-server/login.py'
+* alias server_alias="ogin-server server_alias"
 
-## login server 
+### 2. login server 
 
 * server_alias

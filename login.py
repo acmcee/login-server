@@ -21,6 +21,7 @@ class ServerConfig(object):
         self.login_success_keyword = None
         self.login_failed_keyword = None
         self.login_cmd = None
+        self.login_log = None
         self.servers = {}
 
 
@@ -42,25 +43,29 @@ class LoginServer(object):
             self.config.login_success_keyword = data['login_success_keyword']
             self.config.login_failed_keyword = data['login_failed_keyword']
             self.config.login_cmd = data['login_cmd']
+            self.config.login_log = data['login_log']
 
     def _get_google_code(self):
-        totp = pyotp.TOTP(self.config.cas_user)
+        totp = pyotp.TOTP(self.config.cas_key)
         self._google_code = totp.now()
 
     def login_server(self, server_alias):
+        output = open(self.config.login_log, 'ab')
         server_dns = self.config.servers.get(server_alias)
         if not server_dns:
-            print("%s is not exists in %s" % (server_alias, config_file))
+            print("%s alias is not exist in %s" % (server_alias, config_file))
             sys.exit(-1)
         login_cmd = self.config.login_cmd.format(cas_user=self.config.cas_user, server_alias=server_dns)
+        print(login_cmd)
         child = pexpect.spawn(login_cmd)
-        index = child.expect([self.config.totp_keyword.encode('utf8'),
-                              self.config.login_success_keyword.encode('utf8'),
-                              self.config.login_failed_keyword.encode('utf8'),
-                              pexpect.EOF,
-                              pexpect.TIMEOUT])
+        child.logfile = output
 
         for i in range(3):
+            index = child.expect([self.config.totp_keyword.encode('utf8'),
+                                  self.config.login_success_keyword.encode('utf8'),
+                                  self.config.login_failed_keyword.encode('utf8'),
+                                  pexpect.EOF,
+                                  pexpect.TIMEOUT])
             if index == 0:
                 self._get_google_code()
                 child.sendline(self._google_code)
@@ -68,13 +73,17 @@ class LoginServer(object):
                 child.interact()
                 child.close()
                 child.wait()
+                output.close()
                 return
             elif index == 2:
                 print("logging failed, code is error")
+                output.close()
                 return
             elif index == 4:
                 print("logging server timeout")
+                output.close()
                 return
+        print("try timeout ...")
 
 
 if __name__ == '__main__':

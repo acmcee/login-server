@@ -5,6 +5,7 @@
   "login_success_keyword": "机房内网",
   "login_failed_keyword": "Permission denied'",
   "login_cmd": "ssh -A {cas_user}@{server_alias}",
+  "login_log": "/tmp/login-server.log",
   "servers": {
     "server_alias": "server_dns",
     "s1": "xxx.xxx.com",
