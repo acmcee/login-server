@@ -76,11 +76,11 @@ class LoginServer(object):
                 output.close()
                 return
             elif index == 2:
-                print("logging failed, code is error")
+                print("login failed, get %s" % self.config.login_failed_keyword )
                 output.close()
                 return
             elif index == 4:
-                print("logging server timeout")
+                print("login server timeout")
                 output.close()
                 return
         print("try timeout ...")
