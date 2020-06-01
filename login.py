@@ -20,6 +20,7 @@ class ServerConfig(object):
         self.totp_keyword = None
         self.login_success_keyword = None
         self.login_failed_keyword = None
+        self.login_answer_yes_keyword = None
         self.login_cmd = None
         self.login_log = None
         self.servers = {}
@@ -42,6 +43,7 @@ class LoginServer(object):
             self.config.totp_keyword = data['totp_keyword']
             self.config.login_success_keyword = data['login_success_keyword']
             self.config.login_failed_keyword = data['login_failed_keyword']
+            self.config.login_answer_yes_keyword = data.get('login_failed_keyword', 'yes/no')
             self.config.login_cmd = data['login_cmd']
             self.config.login_log = data['login_log']
 
@@ -60,10 +62,11 @@ class LoginServer(object):
         child = pexpect.spawn(login_cmd)
         child.logfile = output
 
-        for i in range(3):
+        for i in range(4):
             index = child.expect([self.config.totp_keyword.encode('utf8'),
                                   self.config.login_success_keyword.encode('utf8'),
                                   self.config.login_failed_keyword.encode('utf8'),
+                                  self.config.login_answer_yes_keyword.encode('utf8'),
                                   pexpect.EOF,
                                   pexpect.TIMEOUT])
             if index == 0:
@@ -79,7 +82,10 @@ class LoginServer(object):
                 print("login failed, get %s" % self.config.login_failed_keyword )
                 output.close()
                 return
-            elif index == 4:
+            elif index == 3:
+                print("send yes")
+                child.sendline('yes')
+            elif index == 5:
                 print("login server timeout")
                 output.close()
                 return
