@@ -8,22 +8,27 @@
 
 ## 将.config-example.json 重命名为 .config.json 修改对应的配置以及添加服务器列表
 
-* 添加数字验证码的关键字
-* 添加登录服务器后的关键字
-* 添加服务器的列表以及对应的map
+* cas_user: 登录服务器的用户名
+* cas_key: 秘钥
+* totp_keyword: 提示输入动态码的关键字
+* login_success_keyword: 登录成功的关键字
+* login_failed_keyword: 登录失败的关键字
+* login_cmd: 登录命令
+* login_log: 登录的日志，所有的命令输入和输出，可以排除问题
+* servers: 服务器的map，前面的alias，后面是服务器的地址
 
 
 ```angular2
 {
-  "cas_user": "harvey",   // 登录服务器的用户名
-  "cas_key": "xxxxxxxxxxxx",  // Google的秘钥
-  "totp_keyword": "数字验证码",  // 提示输入Google动态码的关键字
-  "login_success_keyword": "机房内网",  // 服务器登录成功的关键字
-  "login_failed_keyword": "Permission denied'",  // 登录失败的关键字
-  "login_cmd": "ssh -A {cas_user}@{server_alias}", // 服务器登录的命令
-  "login_log": "/tmp/login-server.log",  // 服务器登录的日志，方便排查问题
+  "cas_user": "harvey", 
+  "cas_key": "xxxxxxxxxxxx",   
+  "totp_keyword": "数字动态码",   
+  "login_success_keyword": "Last login:", 
+  "login_failed_keyword": "Permission denied'", 
+  "login_cmd": "ssh -A {cas_user}@{server_alias}", 
+  "login_log": "/tmp/login-server.log",  
   "servers": {
-    "server_alias": "server_dns",  // 服务器列表
+    "server_alias": "server_dns", 
     "s1": "xxx.xxx.com",
     "s2": "xxx.xxx.com",
     "s3": "xxx.xxx.com"
@@ -37,8 +42,8 @@
 
 ### 1. bash_profile 添加 alias
 * alias login-server='/xx/bin/python /xx/login-server/login.py'
-* alias server_alias="login-server server_alias"
+* alias s1="login-server server_alias"
 
 ### 2. login server 
 
-* server_alias
+>   $ s1
