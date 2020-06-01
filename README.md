@@ -24,7 +24,7 @@
   "cas_key": "xxxxxxxxxxxx",   
   "totp_keyword": "数字动态码",   
   "login_success_keyword": "Last login:", 
-  "login_failed_keyword": "Permission denied'", 
+  "login_failed_keyword": "Permission denied", 
   "login_cmd": "ssh -A {cas_user}@{server_alias}", 
   "login_log": "/tmp/login-server.log",  
   "servers": {
