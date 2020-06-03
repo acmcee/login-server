@@ -27,7 +27,7 @@
   "login_success_keyword": "Last login:",
   "login_failed_keyword": "Permission denied",
   "login_answer_yes_keyword": "yes/no",
-  "login_cmd": "ssh -A {cas_user}@{server_alias}",
+  "login_cmd": "ssh -A -o ConnectTimeout=3 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null {cas_user}@{server_alias}",
   "login_log": "/tmp/login-server.log",
   "servers": {
     "server_alias": "server_dns",

@@ -49,7 +49,7 @@ class LoginServer(object):
             self.config.totp_keyword = data['totp_keyword']
             self.config.login_success_keyword = data['login_success_keyword']
             self.config.login_failed_keyword = data['login_failed_keyword']
-            self.config.login_answer_yes_keyword = data.get('login_failed_keyword', 'yes/no')
+            self.config.login_answer_yes_keyword = data.get('login_answer_yes_keyword', 'yes/no')
             self.config.login_cmd = data['login_cmd']
             self.config.login_log = data['login_log']
 
